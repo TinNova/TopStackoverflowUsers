@@ -1,0 +1,46 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "40ae69b986efe89ab94dec71b3bc24eb",
+    "entities": [
+      {
+        "tableName": "UserSql",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` INTEGER NOT NULL, `isFollowed` INTEGER NOT NULL, `isBlocked` INTEGER NOT NULL, PRIMARY KEY(`userId`))",
+        "fields": [
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFollowed",
+            "columnName": "isFollowed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isBlocked",
+            "columnName": "isBlocked",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "userId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '40ae69b986efe89ab94dec71b3bc24eb')"
+    ]
+  }
+}

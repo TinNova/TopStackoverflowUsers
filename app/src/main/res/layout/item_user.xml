@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_gravity="center_vertical"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/item_user_profile_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_user_username"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Test user"/>
+        tools:text="John Steel"
+        app:layout_constraintStart_toEndOf="@id/item_user_profile_image"
+        app:layout_constraintTop_toTopOf="@id/item_user_follow"
+        app:layout_constraintBottom_toBottomOf="@id/item_user_follow" />
+    
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_reputation_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="00000"
+        app:layout_constraintStart_toEndOf="@id/item_user_username"
+        app:layout_constraintTop_toTopOf="@id/item_user_follow"
+        app:layout_constraintBottom_toBottomOf="@id/item_user_follow"/>
 
-</LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/item_user_follow"
+        android:text="@string/follow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/item_user_block"
+        app:layout_constraintTop_toTopOf="@id/item_user_profile_image" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/item_user_block"
+        android:text="@string/block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_user_profile_image" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

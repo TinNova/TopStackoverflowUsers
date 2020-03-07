@@ -1,22 +1,36 @@
 package com.worldremit.sousers
 
-import android.app.Application
-import com.google.gson.GsonBuilder
-import com.worldremit.sousers.repository.UsersRepository
-import com.worldremit.sousers.repository.UsersRepositoryApi
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import com.worldremit.sousers.di.AppComponent
+import com.worldremit.sousers.di.DaggerAppComponent
+import dagger.android.DaggerApplication
+import dagger.android.AndroidInjector
 
-class App : Application() {
+class App : DaggerApplication() {
 
-    val retrofit: Retrofit = Retrofit.Builder()
-            .client(OkHttpClient.Builder().build())
-            .baseUrl("https://api.stackexchange.com")
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+    override fun applicationInjector():
+            AndroidInjector<out DaggerApplication> {
+
+        //Build app component
+        val appComponent: AppComponent = DaggerAppComponent.builder()
+            .application(this)
             .build()
 
-    val usersRepository: UsersRepository = UsersRepositoryApi(retrofit)
+        //inject application instance
+        appComponent.inject(this)
+        return appComponent
+    }
+
+//    val retrofit: Retrofit = Retrofit.Builder()
+//            .client(OkHttpClient
+//                .Builder()
+//                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+//                .build())
+//            .baseUrl("https://api.stackexchange.com")
+//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+//            .build()
+//
+//    val usersRepository: UsersRepository = UsersRepositoryApi(retrofit)
+
+
 }
