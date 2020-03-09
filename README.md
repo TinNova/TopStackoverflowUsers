@@ -45,6 +45,8 @@ The app displays the top 100 StackOverflow users
 - When referencing the userId from the Api against the userId from Room, I would like to first compare the list sizes, and begin the comparison always with the smallest list (currently it is assumed the room database is always the smallest which could be false one day)
 - Create mocks for the Room database and Api to allow the UserRepository to be tested
 - Test the UsersHelp.kt class
+- Improve the UI, use Picasso to add the users profile picture
+- Create a DetailActivity showing more information about the user, as can be seen by the SanitisedUser model the data available was to be used in a DetailActivity
 
 ## Libraries
 - Networking: gson, okHttp, Retrofit, RxJava
