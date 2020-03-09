@@ -19,7 +19,6 @@ class UsersAdapter extends RecyclerView.Adapter {
 
     private final ListItemClickListener onClickListener;
     private List<SanitisedUser> users;
-    private final Context context;
 
 
     public interface ListItemClickListener {
@@ -31,9 +30,8 @@ class UsersAdapter extends RecyclerView.Adapter {
 
     }
 
-    public UsersAdapter(List<SanitisedUser> users, Context context, ListItemClickListener listener) {
+    public UsersAdapter(List<SanitisedUser> users, ListItemClickListener listener) {
         this.users = users;
-        this.context = context;
         this.onClickListener = listener;
     }
 

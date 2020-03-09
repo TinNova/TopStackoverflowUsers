@@ -22,7 +22,7 @@ class MainActivityEspressoTest {
 
     @Test
     fun dataIsDisplayedOnRecyclerView() {
-        Espresso.onView(ViewMatchers.withId(R.id.users_list)).check(
+        Espresso.onView(ViewMatchers.withId(R.id.users_list_recycler_view)).check(
             ViewAssertions.matches(
                 ViewMatchers.isDisplayed()
             )

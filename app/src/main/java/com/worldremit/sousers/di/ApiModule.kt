@@ -29,10 +29,6 @@ class ApiModule {
     @Reusable
     fun providesOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
-//            .connectTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-//            .writeTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-//            .readTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-//            .cache(null)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 }

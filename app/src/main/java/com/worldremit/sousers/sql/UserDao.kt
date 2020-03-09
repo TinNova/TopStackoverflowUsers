@@ -11,7 +11,7 @@ interface UserDao {
      * OnConflictStrategy.REPLACE
      *
      * REPLACE is used because a user could be followed, prompting them to be saved
-     *         that same user could then be blocked, in which case we will replace*/
+     *         that same user could then be blocked, in which case we will replace */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(userSql: UserSql): Completable
 

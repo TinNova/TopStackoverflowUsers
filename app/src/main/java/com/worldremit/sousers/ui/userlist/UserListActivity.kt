@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.worldremit.sousers.R
-import com.worldremit.sousers.ViewModelFactory
+import com.worldremit.sousers.*
 import com.worldremit.sousers.ui.SanitisedUser
 import com.worldremit.sousers.ui.SqlUserState
 import com.worldremit.sousers.ui.ViewStateModel
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_user_list.*
 import javax.inject.Inject
 
 
@@ -47,15 +47,15 @@ class UserListActivity : AppCompatActivity(), UsersAdapter.ListItemClickListener
             it?.let {
                 when (it.isDataReady) {
                     true -> showUsers(it.sanitisedUsers)
-//                    false -> recyclerView.gone()
+                    false -> users_list_recycler_view.gone()
                 }
                 when (it.isLoading) {
-//                    true -> loading_icon.visible()
-//                    false -> loading_icon.gone()
+                    true -> loading_icon.visible()
+                    false -> loading_icon.gone()
                 }
                 when (it.isNetworkError) {
-//                    true -> network_error.visible()
-//                    false -> network_error.gone()
+                    true -> network_error.visible()
+                    false -> network_error.gone()
                 }
             }
         })
@@ -65,7 +65,7 @@ class UserListActivity : AppCompatActivity(), UsersAdapter.ListItemClickListener
         viewModel.sqlUserState.observe(this, Observer<SqlUserState> {
             it?.let {
                 when (it.isSqlError) {
-//                    true -> showToast
+                    true -> this.toast(getString(R.string.sql_error))
                     false -> updateButton(it.userStateChange, it.sanitisedUser)
                 }
             }
@@ -89,17 +89,14 @@ class UserListActivity : AppCompatActivity(), UsersAdapter.ListItemClickListener
     }
 
     private fun setupRecyclerView() {
-        adapter = UsersAdapter(emptyList(), this, this)
-        val recycleView = findViewById<RecyclerView>(R.id.users_list)
-        recycleView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
-        recycleView.adapter = adapter
-        recycleView.layoutManager = LinearLayoutManager(this)
-        recycleView.setHasFixedSize(true)
+        adapter = UsersAdapter(emptyList(), this)
+        users_list_recycler_view.adapter = adapter
+        users_list_recycler_view.layoutManager = LinearLayoutManager(this)
+        users_list_recycler_view.setHasFixedSize(true)
     }
 
     private fun showUsers(users: List<SanitisedUser>) {
-
-        this.users = users.toMutableList()
+        users_list_recycler_view.visible()
         adapter!!.setUsers(users)
     }
 
@@ -113,5 +110,7 @@ class UserListActivity : AppCompatActivity(), UsersAdapter.ListItemClickListener
         viewModel.saveUserBlockStatus(user)
     }
 
-    override fun onListItemClick(user: SanitisedUser) {}
+    override fun onListItemClick(user: SanitisedUser) {
+        //Intent To DetailActivity
+    }
 }

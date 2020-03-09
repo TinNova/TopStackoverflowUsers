@@ -14,18 +14,3 @@ abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract fun bindDetailActivity(): DetailActivity
 }
-
-//@Module
-//class ActivityModule(private var activity: Activity) {
-//
-//    @Provides
-//    fun provideActivity(): Activity {
-//        return activity
-//    }
-//
-//    @Provides
-//    fun providePresenter(): UserListPresenter {
-//        return UserListPresenter()
-//    }
-
-//}

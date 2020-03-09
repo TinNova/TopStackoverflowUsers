@@ -20,17 +20,4 @@ class App : DaggerApplication() {
         return appComponent
     }
 
-//    val retrofit: Retrofit = Retrofit.Builder()
-//            .client(OkHttpClient
-//                .Builder()
-//                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//                .build())
-//            .baseUrl("https://api.stackexchange.com")
-//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-//            .build()
-//
-//    val usersRepository: UsersRepository = UsersRepositoryApi(retrofit)
-
-
 }

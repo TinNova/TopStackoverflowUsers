@@ -13,7 +13,7 @@ class UsersHelper @Inject constructor() {
 
         // IMPROVEMENTS:
         // check which list is smallest, you should always start with the smallest list
-        // 1. Compare sanitisedUsers to sqlUsers
+        // 1. Compare size of sanitisedUsers list to size of sqlUsers list
         // 2. Begin the comparison with the smallest list
 
         sqlUsers.forEach { sqlUser ->

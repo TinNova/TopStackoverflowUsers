@@ -6,6 +6,9 @@
     <string name="block">Block</string>
     <string name="unblock">Unblock</string>
 
+    <string name="network_error">Error, no internet connection. Please tap to try again.</string>
+    <string name="sql_error">User Blocked/Followed did not save.</string>
+
 
 
 
