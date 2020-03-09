@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.worldremit.sousers.R
 import com.worldremit.sousers.ViewModelFactory
 import com.worldremit.sousers.ui.SanitisedUser
+import com.worldremit.sousers.ui.SqlUserState
 import com.worldremit.sousers.ui.ViewStateModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -23,6 +24,11 @@ class UserListActivity : AppCompatActivity(), UsersAdapter.ListItemClickListener
     internal lateinit var viewModelFactory: ViewModelFactory<UserListViewModel>
     private lateinit var viewModel: UserListViewModel
 
+    private lateinit var users: MutableList<SanitisedUser>
+
+    private lateinit var blockBtn: View
+    private lateinit var followBtn: View
+
     private var adapter: UsersAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +39,14 @@ class UserListActivity : AppCompatActivity(), UsersAdapter.ListItemClickListener
 
         setupRecyclerView()
         observeViewState()
+        observerSqlUserState()
     }
 
     private fun observeViewState() {
         viewModel.viewState.observe(this, Observer<ViewStateModel> {
             it?.let {
                 when (it.isDataReady) {
-                    true -> showUsers(it.listData)
+                    true -> showUsers(it.sanitisedUsers)
 //                    false -> recyclerView.gone()
                 }
                 when (it.isLoading) {
@@ -54,6 +61,32 @@ class UserListActivity : AppCompatActivity(), UsersAdapter.ListItemClickListener
         })
     }
 
+    private fun observerSqlUserState() {
+        viewModel.sqlUserState.observe(this, Observer<SqlUserState> {
+            it?.let {
+                when (it.isSqlError) {
+//                    true -> showToast
+                    false -> updateButton(it.userStateChange, it.sanitisedUser)
+                }
+            }
+        })
+    }
+
+    private fun updateButton(
+        userStateChange: UserListViewModel.UserStateChange,
+        sanitisedUser: SanitisedUser
+    ) {
+
+        if (userStateChange == UserListViewModel.UserStateChange.BLOCK) {
+            (blockBtn as Button).text =
+                if (sanitisedUser.isBlocked) getString(R.string.unblock) else getString(R.string.block)
+        } else {
+            (followBtn as Button).text =
+                if (sanitisedUser.isFollowed) getString(R.string.unfollow) else getString(
+                    R.string.follow
+                )
+        }
+    }
 
     private fun setupRecyclerView() {
         adapter = UsersAdapter(emptyList(), this, this)
@@ -65,18 +98,18 @@ class UserListActivity : AppCompatActivity(), UsersAdapter.ListItemClickListener
     }
 
     private fun showUsers(users: List<SanitisedUser>) {
+
+        this.users = users.toMutableList()
         adapter!!.setUsers(users)
     }
 
-    override fun onFollowClick(view: View?, user: SanitisedUser) {
-        (view as Button).text =
-            if (user.isFollowed) getString(R.string.follow) else getString(R.string.unfollow)
+    override fun onFollowClick(view: View, user: SanitisedUser) {
+        followBtn = view
         viewModel.saveUserFollowStatus(user)
     }
 
-    override fun onBlockClick(view: View?, user: SanitisedUser) {
-        (view as Button).text =
-            if (user.isBlocked) getString(R.string.block) else getString(R.string.unblock)
+    override fun onBlockClick(view: View, user: SanitisedUser) {
+        blockBtn = view
         viewModel.saveUserBlockStatus(user)
     }
 
